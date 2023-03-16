@@ -33,3 +33,223 @@ For support and assistance with OpenRSPP Marketplace, please consult the documen
 ## License
 
 OpenRSPP Marketplace is open-source software released under the MIT License.
+
+## Service Provider Management
+### Get Service Provider Information
+`GET /serviceproviders/:id`
+
+Retrieve information about a specific service provider, including services offered and pricing.
+
+Request
+
+```
+curl -X GET https://api.openrspp.io/serviceproviders/:id
+```
+
+Response
+
+```
+HTTP/1.1 200 OK
+{
+    "id": 1,
+    "name": "RSPP A",
+    "services": [
+        {
+            "id": 1,
+            "name": "Clinical Trial Design",
+            "price": 5000
+        },
+        {
+            "id": 2,
+            "name": "Data Management",
+            "price": 4000
+        }
+    ],
+    "rating": 4.5,
+    "review_count": 10
+}
+```
+
+### Create a Service Provider
+
+`POST /serviceproviders`
+
+Create a new service provider, including services and pricing.
+
+Request
+
+```
+curl -X POST https://api.openrspp.io/serviceproviders
+```
+```
+{
+    "name": "RSPP B",
+    "services": [
+        {
+            "name": "Clinical Trial Design",
+            "price": 5000
+        },
+        {
+            "name": "Data Management",
+            "price": 4000
+        }
+    ]
+}
+```
+Response
+```
+HTTP/1.1 201 Created
+{
+    "id": 2,
+    "name": "RSPP B",
+    "services": [
+        {
+            "id": 3,
+            "name": "Clinical Trial Design",
+            "price": 5000
+        },
+        {
+            "id": 4,
+            "name": "Data Management",
+            "price": 4000
+        }
+    ],
+    "rating": 0,
+    "review_count": 0
+}
+```
+
+## Service Management
+### Update Service Information
+`PUT /services/:id`
+
+Update the information for a specific service, including price.
+
+Request
+
+```
+curl -X PUT https://api.openrspp.io/services/:id
+```
+
+```
+{
+    "price": 6000
+}
+```
+
+Response
+
+```
+HTTP/1.1 200 OK
+{
+    "id": 1,
+    "name": "Clinical Trial Design",
+    "price": 6000
+}
+```
+
+Add Service
+POST /services
+
+Add a new service to a service provider.
+
+Request
+javascript
+Copy code
+curl -X POST https://api.openrspp.io/services
+
+```
+{
+    "name": "Regulatory Support",
+    "price": 7000
+}
+```
+Response
+```
+HTTP/1.1 201 Created
+{
+    "id": 5,
+    "name": "Regulatory Support",
+    "price": 7000
+}
+```
+
+## Search and Filter
+### Search Service Providers
+
+`GET /serviceproviders`
+
+Search and filter service providers based on name, services offered, price, rating, and review count.
+
+Request
+```
+curl -X GET https://api.openrspp.io/serviceproviders?name=RSPP&services=Clinical%20Trial%20Design&min_price=3000&max_price=6000&min_rating=4&max_rating=5&min_review_count=5
+```
+Response
+```
+HTTP/1.1 200 OK
+[    {        "id": 1,        "name": "RSPP A",        "services": [            {                "id": 1,                "name": "Clinical Trial Design",                "price": 5000            }        ],
+        "rating": 4.8,
+        "review_count": 8
+    },
+    {
+        "id": 2,
+        "name": "RSPP B",
+        "services": [
+            {
+                "id": 3,
+                "name": "Clinical Trial Design",
+                "price": 5000
+            }
+        ],
+        "rating": 4.5,
+        "review_count": 10
+    }
+]
+```
+## Review Management
+### Add Review
+POST /reviews
+
+Add a review for a service provider.
+
+Request
+```
+curl -X POST https://api.openrspp.io/reviews
+```
+``
+{
+    "service_provider_id": 1,
+    "rating": 4,
+    "text": "Great service and excellent support!"
+}
+```
+Response
+```
+HTTP/1.1 201 Created
+{
+    "id": 1,
+    "service_provider_id": 1,
+    "rating": 4,
+    "text": "Great service and excellent support!",
+    "created_at": "2022-12-01T12:00:00Z"
+}
+```
+
+### Get Review Count
+`GET /serviceproviders/:id/review_count`
+
+Retrieve the number of reviews for a specific service provider.
+
+Request
+```
+curl -X GET https://api.openrspp.io/serviceproviders/1/review_count
+```
+
+Response
+```
+HTTP/1.1 200 OK
+{
+    "review_count": 8
+}
+```
