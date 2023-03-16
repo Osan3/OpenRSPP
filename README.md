@@ -154,9 +154,9 @@ POST /services
 Add a new service to a service provider.
 
 Request
-javascript
-Copy code
+```
 curl -X POST https://api.openrspp.io/services
+```
 
 ```
 {
@@ -217,7 +217,7 @@ Request
 ```
 curl -X POST https://api.openrspp.io/reviews
 ```
-``
+```
 {
     "service_provider_id": 1,
     "rating": 4,
